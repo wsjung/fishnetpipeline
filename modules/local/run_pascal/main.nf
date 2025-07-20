@@ -12,7 +12,7 @@ process RUN_PASCAL {
     output:
     path("pascalOutput/*"), emit: pascaloutput
     path(geneScoreFile),    emit: genescorefile
-    path(goFile),           emit:gofile
+    path(goFile),           emit: gofile
 
     script:
     """

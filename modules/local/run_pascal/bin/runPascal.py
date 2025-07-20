@@ -35,5 +35,6 @@ def main():
     f = open(os.path.join(args.outputPath, fileName), "w")
     for r in RESULT[0]:
         f.write(str(r)+"\n")
+
 if __name__ == "__main__":
     main()
