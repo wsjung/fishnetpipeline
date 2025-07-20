@@ -18,7 +18,7 @@ process PREPROCESS_FOR_PASCAL {
 
     script:
     """
-    python3 ${projectDir}/bin/preProcessForPascal.py \
+    python3 ${moduleDir}/bin/preProcessForPascal.py \
         ${pvalFile} \
         ${params.input_modules} \
         "pascalInput/" \

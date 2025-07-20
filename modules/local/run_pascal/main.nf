@@ -16,7 +16,7 @@ process RUN_PASCAL {
 
     script:
     """
-    python3 ${projectDir}/bin/runPascal.py \
+    python3 ${moduleDir}/bin/runPascal.py \
         ${geneScoreFile} \
         ${moduleFile} \
         "pascalOutput/" \

@@ -15,7 +15,7 @@ process MERGE_RESULTS {
     path("summaries/*"), emit: summaries
 
     """
-    python3 ${projectDir}/bin/mergeORAandSummary.py \
+    python3 ${moduleDir}/bin/mergeORAandSummary.py \
         ${masterSummaryPiece} \
         ${oraSummaryDir} \
         "summaries/" \

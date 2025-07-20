@@ -4,7 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { PREPROCESS_FOR_PASCAL } from '../modules/local/preprocess_for_pascal'
-include { MODULE_ENRICHMENT } from '../subworkflows/local/original_run'
+include { MODULE_ENRICHMENT } from '../subworkflows/local/module_enrichment'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -19,7 +19,7 @@ workflow FISHNETPIPELINE {
     // module: preprocess input files for PASCAL
     //
     PREPROCESS_FOR_PASCAL (
-        params.pvalFileName
+        params.input
     )
 
     //

@@ -8,10 +8,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { RUN_PASCAL } from '../../modules/local/run_pascal'
-include { POSTPROCESS_PASCAL_OUTPUT } from '../../modules/local/postprocess_pascal_output'
-include { GO_ANALYSIS } from '../../modules/local/go_analysis'
-include { MERGE_RESULTS } from '../../modules/local/merge_results'
+include { RUN_PASCAL } from '../../../modules/local/run_pascal'
+include { POSTPROCESS_PASCAL_OUTPUT } from '../../../modules/local/postprocess_pascal_output'
+include { GO_ANALYSIS } from '../../../modules/local/go_analysis'
+include { MERGE_RESULTS } from '../../../modules/local/merge_results'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,7 +22,7 @@ include { MERGE_RESULTS } from '../../modules/local/merge_results'
 workflow MODULE_ENRICHMENT {
 
     take:
-    go
+    gs
     module
     go
 

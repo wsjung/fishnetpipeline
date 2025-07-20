@@ -17,7 +17,7 @@ process POSTPROCESS_PASCAL_OUTPUT {
     path(goFile),                                       emit:gofile
 
     """
-    python3 ${projectDir}/bin/processPascalOutput.py \
+    python3 ${moduleDir}/bin/processPascalOutput.py \
         ${pascalOutputFile} \
         ${params.bonferroni_alpha} \
         "masterSummaryPiece/" \
