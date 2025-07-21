@@ -13,6 +13,7 @@ process MERGE_RESULTS {
 
     output:
     path("summaries/*"), emit: summaries
+    path("summaries/"), emit: summaries_path
 
     """
     python3 ${moduleDir}/bin/mergeORAandSummary.py \

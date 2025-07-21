@@ -12,6 +12,8 @@ include { RUN_PASCAL } from '../../../modules/local/run_pascal'
 include { POSTPROCESS_PASCAL_OUTPUT } from '../../../modules/local/postprocess_pascal_output'
 include { GO_ANALYSIS } from '../../../modules/local/go_analysis'
 include { MERGE_RESULTS } from '../../../modules/local/merge_results'
+include { COMPILE_PHASE1_RESULTS } from '../../../modules/local/compile_phase1_results'
+include { FILTER_PARSE_MASTER_SUMMARY } from '../../../modules/local/filter_parse_master_summary'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,6 +63,20 @@ workflow MODULE_ENRICHMENT {
         GO_ANALYSIS.out.mastersummaryslice | flatten,
         GO_ANALYSIS.out.gosummaries | flatten,
         GO_ANALYSIS.out.gofile | flatten
+    )
+
+    //
+    // module: compile phase 1 results to a master summary file
+    //
+    COMPILE_PHASE1_RESULTS (
+        MERGE_RESULTS.out.summaries_path
+    )
+
+    //
+    // module: filter and parse master summary file
+    //
+    FILTER_PARSE_MASTER_SUMMARY (
+        COMPILE_PHASE1_RESULTS.out.master_summary_file
     )
 
 }
