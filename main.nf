@@ -17,7 +17,7 @@ nextflow.enable.dsl = 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { FISHNETPIPELINE  } from './workflows/fishnetpipeline'
+include { FISHNETPIPELINE } from './workflows/fishnetpipeline'
 
 
 /*
@@ -30,10 +30,9 @@ workflow {
 
     main:
     //
-    // WORKFLOW: Run main FISHNET pipeline workflow
+    // WORKFLOW: Run FISHNET pipeline
     //
-    FISHNETPIPELINE (
-
+    FISHNETPIPELINE(
     )
 }
 

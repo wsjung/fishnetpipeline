@@ -15,6 +15,7 @@ process GO_ANALYSIS {
     path(masterSummarySlice),   emit: mastersummaryslice
     path("${params.GO_summaries_path}/${params.trait}/GO_summaries_${goFile.baseName.split('_')[2]}_${goFile.baseName.split('_')[3]}/"),   emit: gosummaries
     path(goFile),               emit: gofile
+    path("${params.GO_summaries_path}/"), emit: gosummaries_path
 
     script:
     def oraSummaryDir = "${params.GO_summaries_path}/${params.trait}/GO_summaries_${goFile.baseName.split('_')[2]}_${goFile.baseName.split('_')[3]}/"

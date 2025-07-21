@@ -3,8 +3,8 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { PREPROCESS_FOR_PASCAL } from '../modules/local/preprocess_for_pascal'
-include { MODULE_ENRICHMENT } from '../subworkflows/local/module_enrichment'
+include { FISHNET_PHASE1 } from '../subworkflows/local/fishnet_phase1'
+include { FISHNET_PHASE2 } from '../subworkflows/local/fishnet_phase2'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,19 +16,21 @@ workflow FISHNETPIPELINE {
 
     main:
     //
-    // module: preprocess input files for PASCAL
+    // subworkflow: phase 1 (module enrichment analysis)
     //
-    PREPROCESS_FOR_PASCAL (
-        params.input
+    FISHNET_PHASE1 (
+        params.input,
+        params.input_modules
     )
 
     //
-    // subworkflow: module enrichment subworkflow
+    // subworkflow: phase 2
     //
-    MODULE_ENRICHMENT (
-        PREPROCESS_FOR_PASCAL.out.gs,
-        PREPROCESS_FOR_PASCAL.out.module,
-        PREPROCESS_FOR_PASCAL.out.go
+    FISHNET_PHASE2 (
+        params.input,
+        params.input_modules,
+        FISHNET_PHASE1.out.master_summary_filtered_parsed,
+        FISHNET_PHASE1.out.gosummaries_path
     )
 
 }

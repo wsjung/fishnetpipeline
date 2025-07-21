@@ -10,6 +10,7 @@ process PREPROCESS_FOR_PASCAL {
 
     input:
     path pvalFile
+    path modules_path
 
     output:
     path("pascalInput/GS_*"),       emit: gs
@@ -20,7 +21,7 @@ process PREPROCESS_FOR_PASCAL {
     """
     python3 ${moduleDir}/bin/preProcessForPascal.py \
         ${pvalFile} \
-        ${params.input_modules} \
+        ${modules_path} \
         "pascalInput/" \
         ${params.pipeline} \
         ${params.trait} \

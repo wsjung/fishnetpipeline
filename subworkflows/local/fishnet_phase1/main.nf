@@ -8,6 +8,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+include { PREPROCESS_FOR_PASCAL } from '../../../modules/local/preprocess_for_pascal'
 include { RUN_PASCAL } from '../../../modules/local/run_pascal'
 include { POSTPROCESS_PASCAL_OUTPUT } from '../../../modules/local/postprocess_pascal_output'
 include { GO_ANALYSIS } from '../../../modules/local/go_analysis'
@@ -21,21 +22,33 @@ include { FILTER_PARSE_MASTER_SUMMARY } from '../../../modules/local/filter_pars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow MODULE_ENRICHMENT {
+workflow FISHNET_PHASE1 {
 
+    // inputs:
+    // @input_traits: currently written for a single-trait input (input_traits),
+    //                a path to the input summary statistics file
+    // @input_modules_path: path to directory containing network modules
+    //                      (can be any number of modules)
     take:
-    gs
-    module
-    go
+    input_traits
+    input_modules_path
 
     main:
+    //
+    // module: preprocess input data for pascal
+    //
+    PREPROCESS_FOR_PASCAL (
+        input_traits,
+        input_modules_path
+    )
+
     //
     // module: run pascal
     //
     RUN_PASCAL (
-        gs | flatten,
-        module | flatten,
-        go | flatten
+        PREPROCESS_FOR_PASCAL.out.gs | flatten,
+        PREPROCESS_FOR_PASCAL.out.module | flatten,
+        PREPROCESS_FOR_PASCAL.out.go | flatten
     )
 
     //
@@ -78,5 +91,9 @@ workflow MODULE_ENRICHMENT {
     FILTER_PARSE_MASTER_SUMMARY (
         COMPILE_PHASE1_RESULTS.out.master_summary_file
     )
+
+    emit:
+    master_summary_filtered_parsed = FILTER_PARSE_MASTER_SUMMARY.out.master_summary_filtered_parsed
+    gosummaries_path = GO_ANALYSIS.out.gosummaries_path
 
 }
