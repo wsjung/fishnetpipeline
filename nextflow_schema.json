@@ -10,7 +10,7 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "input_modules", "outdir"],
+            "required": ["input", "input_modules", "outdir", "input_networks"],
             "properties": {
                 "input": {
                     "type": "string",
@@ -26,6 +26,10 @@
                 "input_modules": {
                     "type": "string",
                     "description": "Path to directory containing input network module files. Network module files must be tab-delimited .txt files."
+                },
+                "input_networks": {
+                    "type": "string",
+                    "description": "Path to the directory containing input network files. Names should correspond to the files in the input_modules directory. Files must be tab-separated .txt files with three columns: Source, Target, and Score."
                 },
                 "outdir": {
                     "type": "string",
