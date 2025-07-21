@@ -5,16 +5,27 @@ process GENERATE_OR_STATISTICS_DEFAULT {
         'community.wave.seqera.io/library/numpy_python_scipy_pip_pandas:8ef8b8050da9963f' }"
     conda "${moduleDir}/environment.yml"
     label 'process_low'
-    publishDir "${params.outdir}/${params.pipeline}/results/",  mode: 'copy'
+    publishDir "${params.outdir}/${params.pipeline}/results/", pattern:"raw/*", mode: 'copy'
 
     input:
-    tuple path (trait_file), val(trait), path(module_file), val(module_name)
+    tuple   path(trait_file), \
+            val(trait), \
+            val(module_name), \
+            path(module_file, stageAs: "module/*"), \
+            path(network_file, stageAs: "network/*")    // staging required as module file and network file have the same name
     path master_summary_filtered_parsed
     path gosummaries_path
 
     output:
     path("raw/*fishnet_genes.csv"), emit: or_fishnet_genes
     path("raw/*or_summary.csv"), emit: or_summary
+    path(trait_file), emit: trait_file
+    val(trait), emit: trait
+    path(module_file), emit: module_file
+    val(module_name), emit: module_name
+    path(network_file), emit: network_file
+    path(master_summary_filtered_parsed), emit: master_summary_filtered_parsed
+
 
     script:
     """

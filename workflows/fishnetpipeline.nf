@@ -29,6 +29,7 @@ workflow FISHNETPIPELINE {
     FISHNET_PHASE2 (
         params.input,
         params.input_modules,
+        params.input_networks,
         FISHNET_PHASE1.out.master_summary_filtered_parsed,
         FISHNET_PHASE1.out.gosummaries_path
     )
