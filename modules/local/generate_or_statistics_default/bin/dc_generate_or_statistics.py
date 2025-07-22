@@ -112,10 +112,11 @@ def MEA_passing(module_df, temp_master_summary, go_path, gene_set, trait, study,
             module_genes_intersection_gene_set = set(gene_set).intersection(set(module_genes))
 
             #find the genes that also lie in enriched GO Term for the enriched module        
-            go_directory = "GO_summaries_" + trait + "_" + network
+            #go_directory = "GO_summaries_" + trait + "_" + network
             go_file = "sig_" + study + "_" + trait + "_" + network + "_" + str(module_index) + ".csv"
 
-            go_df = pd.read_csv(os.path.join(go_path,go_directory,go_file))
+            #go_df = pd.read_csv(os.path.join(go_path,go_directory,go_file))
+            go_df = pd.read_csv(os.path.join(go_path,go_file))
             if (go_df.shape[0] > 0):
                 all_go_genes_set = get_GO_genes(go_df)
                 set_qualifying_genes = module_genes_intersection_gene_set.intersection(all_go_genes_set)

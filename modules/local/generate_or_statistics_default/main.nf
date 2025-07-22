@@ -7,13 +7,13 @@ process GENERATE_OR_STATISTICS_DEFAULT {
     label 'process_low'
 
     input:
-    tuple   path(trait_file), \
-            val(trait), \
+    tuple   val(trait), \
             val(module_name), \
+            path(trait_file), \
             path(module_file, stageAs: "module/*"), \
-            path(network_file, stageAs: "network/*")    // staging required as module file and network file have the same name
+            path(network_file, stageAs: "network/*"), \
+            path(gosummaries_path)
     path master_summary_filtered_parsed
-    path gosummaries_path
 
     output:
     path("raw/*fishnet_genes.csv"),         emit: or_fishnet_genes
@@ -39,7 +39,7 @@ process GENERATE_OR_STATISTICS_DEFAULT {
         --module_path ${module_file} \
         --network $module_name \
         --master_summary_path ${master_summary_filtered_parsed} \
-        --go_path "${gosummaries_path}/${trait}/" \
+        --go_path "${gosummaries_path}" \
         --output_path "raw/"
 
     cat <<-END_VERSIONS > versions.yml

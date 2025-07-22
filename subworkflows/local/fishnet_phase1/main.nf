@@ -94,6 +94,6 @@ workflow FISHNET_PHASE1 {
 
     emit:
     master_summary_filtered_parsed = FILTER_PARSE_MASTER_SUMMARY.out.master_summary_filtered_parsed
-    gosummaries_path = GO_ANALYSIS.out.gosummaries_path
+    gosummaries_path = GO_ANALYSIS.out.gosummaries | flatten
 
 }

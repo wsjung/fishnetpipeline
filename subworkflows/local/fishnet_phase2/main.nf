@@ -36,6 +36,12 @@ workflow FISHNET_PHASE2 {
     ch_trait_files = Channel.fromPath(input_traits)
     ch_input_modules = Channel.fromPath("${input_modules}/*.txt")
     ch_networks = Channel.value(input_networks)
+    ch_gosummaries_path = gosummaries_path
+        .map { gspath ->
+            def trait = gspath.parent.baseName
+            def module = gspath.baseName.split('_')[3]
+            tuple ( gspath, trait, module )
+        }
 
     // find each pair of trait and module files
     ch_trait_module = ch_trait_files
@@ -55,14 +61,16 @@ workflow FISHNET_PHASE2 {
             tuple( traitFile, traitName, modName, modFile, netFile )
         }
 
+    // join with gosummaries paths for matching trait-module pairs
+    ch_trait_module_network_gosummary = ch_trait_module_network
+        .join(ch_gosummaries_path, by: [1,2])
 
     //
     // module: preprocess input data for pascal
     //
     GENERATE_OR_STATISTICS_DEFAULT (
-        ch_trait_module_network,
+        ch_trait_module_network_gosummary,
         master_summary_filtered_parsed,
-        gosummaries_path
     )
 
     //
