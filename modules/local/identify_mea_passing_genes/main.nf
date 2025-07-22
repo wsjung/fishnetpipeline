@@ -5,8 +5,6 @@ process IDENTIFY_MEA_PASSING_GENES {
         'community.wave.seqera.io/library/numpy_python_scipy_pip_pandas:8ef8b8050da9963f' }"
     conda "${moduleDir}/environment.yml"
     label 'process_low'
-    publishDir "${params.outdir}/${params.pipeline}/",  pattern: "summary/*", mode: 'copy'
-    publishDir "${params.outdir}/${params.pipeline}/", pattern: "significant_module_connections/*",  mode: 'copy'
 
     input:
     path or_fishnet_genes
@@ -18,10 +16,15 @@ process IDENTIFY_MEA_PASSING_GENES {
     path master_summary_filtered_parsed
 
     output:
-    path("significant_module_connections/*"), optional: true, emit: sig_module_connections
-    path("summary/*"), emit: fishnet_genes
+    path("significant_module_connections/*"),   optional: true, emit: sig_module_connections
+    path("summary/*"),                          emit: fishnet_genes
+    path("versions.yml"),                       emit: versions
+
+    when:
+    task.ext.when == null || task.ext.when
 
     script:
+    def args = task.ext.args ?: ''
     """
     python3 ${moduleDir}/bin/dc_no_RP_identify_mea_passing_genes.py \
         --trait ${trait} \
@@ -31,6 +34,14 @@ process IDENTIFY_MEA_PASSING_GENES {
         --network_connections_path ${network_file} \
         --master_summary_filtered_parsed_path ${master_summary_filtered_parsed} \
         --module_path ${module_file}
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python3 --version)
+        pandas: \$(python3 -c "import pandas; print(pandas.__version__)")
+        numpy: \$(python3 -c "import numpy; print(numpy.__version__)")
+        scipy: \$(python3 -c "import scipy; print(scipy.__version__)")
+    END_VERSIONS
     """
 
 }

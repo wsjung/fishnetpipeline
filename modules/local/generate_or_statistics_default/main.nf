@@ -5,7 +5,6 @@ process GENERATE_OR_STATISTICS_DEFAULT {
         'community.wave.seqera.io/library/numpy_python_scipy_pip_pandas:8ef8b8050da9963f' }"
     conda "${moduleDir}/environment.yml"
     label 'process_low'
-    publishDir "${params.outdir}/${params.pipeline}/results/", pattern:"raw/*", mode: 'copy'
 
     input:
     tuple   path(trait_file), \
@@ -17,17 +16,21 @@ process GENERATE_OR_STATISTICS_DEFAULT {
     path gosummaries_path
 
     output:
-    path("raw/*fishnet_genes.csv"), emit: or_fishnet_genes
-    path("raw/*or_summary.csv"), emit: or_summary
-    path(trait_file), emit: trait_file
-    val(trait), emit: trait
-    path(module_file), emit: module_file
-    val(module_name), emit: module_name
-    path(network_file), emit: network_file
-    path(master_summary_filtered_parsed), emit: master_summary_filtered_parsed
+    path("raw/*fishnet_genes.csv"),         emit: or_fishnet_genes
+    path("raw/*or_summary.csv"),            emit: or_summary
+    path(trait_file),                       emit: trait_file
+    val(trait),                             emit: trait
+    path(module_file),                      emit: module_file
+    val(module_name),                       emit: module_name
+    path(network_file),                     emit: network_file
+    path(master_summary_filtered_parsed),   emit: master_summary_filtered_parsed
+    path("versions.yml"),                   emit: versions
 
+    when:
+    task.ext.when == null || task.ext.when
 
     script:
+    def args = task.ext.args ?: ''
     """
     python3 ${moduleDir}/bin/dc_generate_or_statistics.py \
         --gene_set_path ${trait_file} \
@@ -38,6 +41,13 @@ process GENERATE_OR_STATISTICS_DEFAULT {
         --master_summary_path ${master_summary_filtered_parsed} \
         --go_path "${gosummaries_path}/${trait}/" \
         --output_path "raw/"
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python3 --version)
+        pandas: \$(python3 -c "import pandas; print(pandas.__version__)")
+        numpy: \$(python3 -c "import numpy; print(numpy.__version__)")
+    END_VERSIONS
     """
 
 }
