@@ -1,3 +1,4 @@
+<!--
 <h1>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-fishnetpipeline_logo_dark.png">
@@ -21,7 +22,7 @@
 ## Introduction
 
 **nf-core/fishnetpipeline** is a bioinformatics pipeline that ...
-
+-->
 <!-- TODO nf-core:
    Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
    major pipeline sections and the types of output it produces. You're giving an overview to someone new
@@ -35,7 +36,8 @@
 ## Usage
 
 > [!NOTE]
-> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
+> Instructions for executing pipeline for minimal test data (1 summary statistic
+> and 2 modules as defined in `conf/test.config`.
 
 <!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
      Explain what rows and columns represent. For instance (please edit as appropriate):
@@ -53,15 +55,12 @@ Each row represents a fastq file (single-end) or a pair of fastq files (paired e
 
 -->
 
-Now, you can run the pipeline using:
+Once you clone the repository, you can run the pipeline using:
 
 <!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
 
 ```bash
-nextflow run nf-core/fishnetpipeline \
-   -profile <docker/singularity/.../institute> \
-   --input samplesheet.csv \
-   --outdir <OUTDIR>
+nextflow run . -profile test,singularity
 ```
 
 > [!WARNING]
@@ -70,6 +69,9 @@ nextflow run nf-core/fishnetpipeline \
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/fishnetpipeline/usage) and the [parameter documentation](https://nf-co.re/fishnetpipeline/parameters).
 
 ## Pipeline output
+
+> [!NOTE]
+> Results of the test run can be found in `data/results_test`.
 
 To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/fishnetpipeline/results) tab on the nf-core website pipeline page.
 For more details about the output files and reports, please refer to the
