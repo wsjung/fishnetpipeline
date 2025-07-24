@@ -34,6 +34,9 @@ workflow FISHNET_PHASE1 {
     input_modules_path
 
     main:
+    // set up empty channels
+    ch_versions = Channel.empty()
+
     //
     // module: preprocess input data for pascal
     //
@@ -41,6 +44,7 @@ workflow FISHNET_PHASE1 {
         input_traits,
         input_modules_path
     )
+    ch_versions = ch_versions.mix(PREPROCESS_FOR_PASCAL.out.versions)
 
     //
     // module: run pascal
@@ -50,6 +54,7 @@ workflow FISHNET_PHASE1 {
         PREPROCESS_FOR_PASCAL.out.module | flatten,
         PREPROCESS_FOR_PASCAL.out.go | flatten
     )
+    ch_versions = ch_versions.mix(RUN_PASCAL.out.versions)
 
     //
     // module: process pascal output files
@@ -59,6 +64,7 @@ workflow FISHNET_PHASE1 {
         RUN_PASCAL.out.genescorefile | flatten,
         RUN_PASCAL.out.gofile | flatten
     )
+    ch_versions = ch_versions.mix(POSTPROCESS_PASCAL_OUTPUT.out.versions)
 
     //
     // module: run GO analysis
@@ -68,6 +74,7 @@ workflow FISHNET_PHASE1 {
         POSTPROCESS_PASCAL_OUTPUT.out.sigmodules | flatten,
         POSTPROCESS_PASCAL_OUTPUT.out.gofile | flatten
     )
+    ch_versions = ch_versions.mix(GO_ANALYSIS.out.versions)
 
     //
     // module: merge GO analysis results
@@ -77,6 +84,7 @@ workflow FISHNET_PHASE1 {
         GO_ANALYSIS.out.gosummaries | flatten,
         GO_ANALYSIS.out.gofile | flatten
     )
+    ch_versions = ch_versions.mix(MERGE_RESULTS.out.versions)
 
     //
     // module: compile phase 1 results to a master summary file
@@ -84,6 +92,7 @@ workflow FISHNET_PHASE1 {
     COMPILE_PHASE1_RESULTS (
         MERGE_RESULTS.out.summaries_path
     )
+    ch_versions = ch_versions.mix(COMPILE_PHASE1_RESULTS.out.versions)
 
     //
     // module: filter and parse master summary file
@@ -91,9 +100,11 @@ workflow FISHNET_PHASE1 {
     FILTER_PARSE_MASTER_SUMMARY (
         COMPILE_PHASE1_RESULTS.out.master_summary_file
     )
+    ch_versions = ch_versions.mix(FILTER_PARSE_MASTER_SUMMARY.out.versions)
 
     emit:
     master_summary_filtered_parsed = FILTER_PARSE_MASTER_SUMMARY.out.master_summary_filtered_parsed
     gosummaries_path = GO_ANALYSIS.out.gosummaries | flatten
+    versions = ch_versions
 
 }

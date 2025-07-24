@@ -16,9 +16,9 @@ process IDENTIFY_MEA_PASSING_GENES {
     path master_summary_filtered_parsed
 
     output:
-    path("significant_module_connections/*"),   optional: true, emit: sig_module_connections
-    path("summary/*"),                          emit: fishnet_genes
-    path("versions.yml"),                       emit: versions
+    path("significant_module_connections/*"),   optional: true, emit: sig_module_connections    // only created if there are significant modules
+    path("summary/*"),                          optional: true, emit: fishnet_gene              // only created if there are fishnet geness
+    path("versions.yml"),                                       emit: versions
 
     when:
     task.ext.when == null || task.ext.when

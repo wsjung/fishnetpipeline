@@ -1,0 +1,2 @@
+"geneSet","description","size","overlap","expect","enrichmentRatio","pValue","FDR","overlapId","userId","database"
+"GO:0042113","B cell activation",183,6,0.262403211930026,22.8655737704918,1.15944879808261e-07,0.000603609044281805,"933;973;974;29760;55024;115350","FCRL1;BANK1;CD79A;CD22;BLNK;CD79B","geneontology_Biological_Process"

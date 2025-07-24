@@ -33,6 +33,7 @@ workflow FISHNET_PHASE2 {
 
     main:
     // set up channels
+    ch_versions = Channel.empty()
     ch_trait_files = Channel.fromPath(input_traits)
     ch_input_modules = Channel.fromPath("${input_modules}/*.txt")
     ch_networks = Channel.value(input_networks)
@@ -72,6 +73,7 @@ workflow FISHNET_PHASE2 {
         ch_trait_module_network_gosummary,
         master_summary_filtered_parsed,
     )
+    ch_versions = ch_versions.mix(GENERATE_OR_STATISTICS_DEFAULT.out.versions)
 
     //
     // module: identify MEA passing genes (FISHNET genes)
@@ -85,4 +87,8 @@ workflow FISHNET_PHASE2 {
         GENERATE_OR_STATISTICS_DEFAULT.out.network_file,
         GENERATE_OR_STATISTICS_DEFAULT.out.master_summary_filtered_parsed,
     )
+    ch_versions = ch_versions.mix(IDENTIFY_MEA_PASSING_GENES.out.versions)
+
+    emit:
+    versions = ch_versions
 }

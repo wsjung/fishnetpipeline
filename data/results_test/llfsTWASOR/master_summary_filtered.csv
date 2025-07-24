@@ -1,0 +1,2 @@
+study,trait,network,moduleIndex,isModuleSig,modulePval,moduleBonPval,size,numSigGenes,sigGenes,sig1Genes,sig2Genes,sig3Genes,sig4Genes,geneontology_Biological_Process,BPminCorrectedPval,BPminFDREnrichmentRatio,BPmaxEnrichmentRatio
+llfsTWASOR,0-BMI,ppi,764,True,9.557112364619023e-06,0.0094519841286082,15,0,[],['CD79B'],"['FCRL1', 'CD79A', 'CD22', 'CD79B']","['FCRL1', 'CD79A', 'CD22', 'CD79B']","['CD72', 'FCRL1', 'BANK1', 'FCRLA', 'CD79A', 'CD22', 'CD79B', 'CD19', 'DAPP1', 'FCMR']",1.0,0.0006036090442818,22.8655737704918,22.8655737704918
