@@ -31,29 +31,12 @@
 
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/guidelines/graphic_design/workflow_diagrams#examples for examples.   -->
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
 ## Usage
 
 > [!NOTE]
-> Instructions for executing pipeline for minimal test data (1 summary statistic
-> and 2 modules as defined in `conf/test.config`.
-
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
-
-First, prepare a samplesheet with your input data that looks as follows:
-
-`samplesheet.csv`:
-
-```csv
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-```
-
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
-
--->
+> Instructions for executing pipeline for minimal test data defined in `conf/test.config`.
 
 Once you clone the repository, you can run the pipeline using:
 
@@ -63,19 +46,10 @@ Once you clone the repository, you can run the pipeline using:
 nextflow run . -profile test,singularity
 ```
 
-> [!WARNING]
-> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
-
-For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/fishnetpipeline/usage) and the [parameter documentation](https://nf-co.re/fishnetpipeline/parameters).
-
 ## Pipeline output
 
 > [!NOTE]
 > Results of the test run can be found in `data/results_test`.
-
-To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/fishnetpipeline/results) tab on the nf-core website pipeline page.
-For more details about the output files and reports, please refer to the
-[output documentation](https://nf-co.re/fishnetpipeline/output).
 
 ## Credits
 
